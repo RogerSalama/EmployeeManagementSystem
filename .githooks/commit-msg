@@ -1,0 +1,13 @@
+#!/bin/sh
+# Enforce "type: description" (Conventional Commits-lite)
+
+msg_file="$1"
+msg="$(cat "$msg_file")"
+
+if ! printf "%s" "$msg" | grep -Eq '^(feat|fix|docs|style|refactor|test|chore): .+'; then
+  echo "❌ Invalid commit message."
+  echo "   Use: <type>: <description>"
+  echo "   Types: feat|fix|docs|style|refactor|test|chore"
+  echo "   Example: feat: add login button"
+  exit 1
+fi
