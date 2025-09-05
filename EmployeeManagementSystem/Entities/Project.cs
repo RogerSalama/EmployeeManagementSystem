@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace EmployeeManagementSystem.Entities
         [ForeignKey("ProjectHead")]
         public Employee Employee { get; set; }
         public string ProjectName { get; set; }
+        public string CustomerName { get; set; }
         public string Status { get; set; }  //Turn into enum
         public float Revenue { get; set; }
         public float Expenses { get; set; }
