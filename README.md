@@ -12,3 +12,8 @@ Right click on project name, open "Manage NuGet packages", download the followin
 - Microsoft.EntityFrameworkCore.Tools  
 - Microsoft.EntityFrameworkCore.Design  
 - Microsoft.EntityFrameworkCore.SqlServer  
+
+
+On the terminal run these commands (note : change the path to the directory where EmployeeManagementSystem.API.csproj is stored )
+cd "C:\Users\hp\Desktop\Tarsh\EmployeeManagementSystem.API"
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore --version 6.*
