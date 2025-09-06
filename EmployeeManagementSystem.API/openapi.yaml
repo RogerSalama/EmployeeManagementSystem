@@ -1,0 +1,317 @@
+openapi: 3.1.0
+info:
+  title: Employee Management System API
+  version: 1.0.0
+  description: A seed specification for the backend API of an employee management desktop application.
+
+servers:
+  - url: http://localhost:5000/api
+    description: Local development server
+
+# Global security definition, applied to endpoints that require authentication
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Auth
+  - name: Users
+  - name: Attendance
+  - name: Projects
+  - name: Vacations
+  - name: Dashboard
+
+paths:
+  # -------------------- Auth --------------------
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: User login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required: [email, password]
+      responses:
+        "200":
+          description: Login success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  user:
+                    $ref: "#/components/schemas/User"
+        "401":
+          description: Invalid credentials
+
+  # -------------------- Users --------------------
+  /users:
+    get:
+      tags: [Users]
+      summary: Get a list of users
+      responses:
+        "200":
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+    post:
+      tags: [Users]
+      summary: Create a new user account
+      description: Access is hierarchical (e.g., Owner can create Manager, Manager can create Employee).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "201":
+          description: User created successfully
+
+  /users/{userId}:
+    get:
+      tags: [Users]
+      summary: Get user details by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    put:
+      tags: [Users]
+      summary: Update user details
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserInput"
+      responses:
+        "200":
+          description: User updated
+
+  # -------------------- Attendance --------------------
+  /attendance/checkin:
+    post:
+      tags: [Attendance]
+      summary: Employee checks in and selects their first project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                projectId:
+                  type: string
+                  format: uuid
+              required: [projectId]
+      responses:
+        "200":
+          description: Check-in successful
+
+  /attendance/checkout:
+    post:
+      tags: [Attendance]
+      summary: Employee checks out and submits their daily time summary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timeLogs:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/TimeLogInput"
+      responses:
+        "200":
+          description: Check-out successful, time log submitted.
+
+  # -------------------- Projects --------------------
+  /projects:
+    get:
+      tags: [Projects]
+      summary: Get a list of all available projects
+      responses:
+        "200":
+          description: A list of projects
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+
+  # -------------------- Vacations --------------------
+  /vacations/requests:
+    get:
+      tags: [Vacations]
+      summary: Get a list of vacation requests
+      description: Employees see their own requests. Managers/Owners see requests pending their approval.
+      responses:
+        "200":
+          description: A list of vacation requests.
+    post:
+      tags: [Vacations]
+      summary: Submit a new vacation request
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VacationRequestInput"
+      responses:
+        "201":
+          description: Request submitted for approval.
+
+  # -------------------- Dashboard --------------------
+  /dashboard/productivity:
+    get:
+      tags: [Dashboard]
+      summary: Get employee productivity metrics (owner/CEO only)
+      responses:
+        "200":
+          description: High-level productivity report.
+
+  /dashboard/project-costs:
+    get:
+      tags: [Dashboard]
+      summary: Get cost breakdown by project (owner/CEO only)
+      responses:
+        "200":
+          description: A breakdown of hours and salary costs per project.
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    Role:
+      type: string
+      enum: [owner, manager, head_of_unit, accountant, employee]
+
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          $ref: "#/components/schemas/Role"
+        employmentDate:
+          type: string
+          format: date
+        salary:
+          type: number
+          format: double
+          description: Monthly salary, access restricted by role.
+
+    UserInput:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        role:
+          $ref: "#/components/schemas/Role"
+        employmentDate:
+          type: string
+          format: date
+        salary:
+          type: number
+          format: double
+      required:
+        - name
+        - email
+        - password
+        - role
+        - employmentDate
+        - salary
+
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+      required:
+        - id
+        - name
+
+    TimeLogInput:
+      type: object
+      description: Represents a block of time an employee spent on a project during the day.
+      properties:
+        projectId:
+          type: string
+          format: uuid
+        durationMinutes:
+          type: integer
+      required:
+        - projectId
+        - durationMinutes
+
+    VacationRequestInput:
+      type: object
+      properties:
+        vacationType:
+          type: integer
+          enum: [1, 2]
+          description: "Type 1 (14 days), Type 2 (17 days)"
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        reason:
+          type: string
+      required:
+        - vacationType
+        - startDate
+        - endDate
