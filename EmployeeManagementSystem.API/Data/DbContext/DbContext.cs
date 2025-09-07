@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Entities;
-using EmployeeManagementSystem.API.Data;
+using EmployeeManagementSystem.API;
 
 namespace EmployeeManagementSystem.Infrastructure.Data
 {
