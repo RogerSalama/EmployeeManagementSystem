@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,8 +19,10 @@ namespace EmployeeManagementSystem.Entities
         public string ProjectName { get; set; }
         public string CustomerName { get; set; }
         public string Status { get; set; }  //Turn into enum
-        public float Revenue { get; set; }
-        public float Expenses { get; set; }
+        [Precision(9, 2)]
+        public decimal Revenue { get; set; }
+        [Precision(9, 2)]
+        public decimal Expenses { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }

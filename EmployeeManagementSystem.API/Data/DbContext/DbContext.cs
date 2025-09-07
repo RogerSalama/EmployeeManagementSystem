@@ -4,8 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Entities;
+using Microsoft.EntityFrameworkCore.Design;
 
-namespace EmployeeManagementSystem.Infrastructure.Data
+namespace EmployeeManagementSystem.API.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
@@ -38,4 +39,55 @@ namespace EmployeeManagementSystem.Infrastructure.Data
     
         
     }
+
+    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    {
+        public ApplicationDbContext CreateDbContext(string[] args)
+        {
+            // Start at the assembly location (bin/Debug/net8.0)
+            var basePath = Directory.GetCurrentDirectory();
+
+            // Walk upwards until we find the API project folder
+            string? solutionRoot = FindProjectRoot(basePath, "EmployeeManagementSystem.API");
+
+            if (solutionRoot == null)
+            {
+                throw new Exception("Could not find EmployeeManagementSystem.API folder!");
+            }
+
+            Console.WriteLine("API Path: " + solutionRoot);
+
+            var configPath = Path.Combine(solutionRoot, "appsettings.json");
+            Console.WriteLine("Looking for: " + configPath);
+
+            var config = new ConfigurationBuilder()
+                .SetBasePath(solutionRoot)
+                .AddJsonFile("appsettings.json", optional: false)
+                .Build();
+
+            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+            optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
+
+            return new ApplicationDbContext(optionsBuilder.Options);
+        }
+
+        private string? FindProjectRoot(string startPath, string projectFolderName)
+        {
+            var dir = new DirectoryInfo(startPath);
+
+            while (dir != null)
+            {
+                var candidate = Path.Combine(dir.FullName, projectFolderName);
+                if (Directory.Exists(candidate))
+                {
+                    return candidate;
+                }
+                dir = dir.Parent;
+            }
+
+            return null;
+        }
+    }
+
+
 }

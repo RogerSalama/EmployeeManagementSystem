@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,7 +20,8 @@ namespace EmployeeManagementSystem.Entities
         public DateTime PeriodEnd { get; set; }
         public string PaymentStatus { get; set; } //Turn to enum
         public DateTime DateOfPayment { get; set; }
-        public float FinalAmount { get; set; }
+        [Precision(9, 2)]
+        public decimal FinalAmount { get; set; }
 
     }
 }
