@@ -15,6 +15,7 @@ namespace EmployeeManagementSystem.API.Controllers
             return Ok();
         }
 
+
         [HttpPost("checkout")]
         public async Task<IActionResult> CheckOut([FromBody] CheckOutRequest request)
         {
