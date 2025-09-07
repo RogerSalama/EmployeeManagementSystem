@@ -1,5 +1,7 @@
 ﻿using EmployeeManagementSystem.Entities;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class Employee
 {
@@ -14,24 +16,29 @@ public class Employee
     public string Address { get; set; }
     public string Military_Status { get; set; }
 
-    public int ContractID { get; set; }
-    public SalaryContract SalaryContract { get; set; }
+    //public int ContractID { get; set; }
+    //[ForeignKey("ContractID")]
+    //public SalaryContract SalaryContract { get; set; }
+    public ICollection<SalaryContract> SalaryContracts { get; set; } = new List<SalaryContract>(); //employee has collection of salary contracts to show contaract history
 
     public int RoleLevel { get; set; }
     //public Role Role { get; set; } //el identity table does this shit on its own
 
     public int ManagerID { get; set; }
+    [ForeignKey("ManagerID")]
     public Employee Manager { get; set; }
 
     public int Type1_Balance { get; set; }
     public int Type2_Balance { get; set; }
 
     public int Vacation_Level_ID { get; set; }
+    [ForeignKey("Vacation_Level_ID")]
     public VacationLevel Vacation_Level { get; set; }
 
     public int EmployementStatus { get; set; }
 
     // 👇 new relation to Identity User
-    public string UserId { get; set; }
+    public string UserID { get; set; }
+    [ForeignKey("UserID")]
     public ApplicationUser User { get; set; }
 }

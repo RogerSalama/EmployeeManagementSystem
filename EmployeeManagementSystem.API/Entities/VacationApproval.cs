@@ -15,7 +15,7 @@ namespace EmployeeManagementSystem.Entities
         // Part of Composite Key
         public int ApprovedByRole { get; set; }
         [ForeignKey("ApprovedByRole")]
-        public Role Role { get; set; }
+        public int RoleLevel { get; set; }
 
         // FK → Employee (who approved)
         public int ApprovedByID { get; set; }

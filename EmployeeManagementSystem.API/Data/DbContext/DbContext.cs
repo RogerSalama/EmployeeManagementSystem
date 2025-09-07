@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Entities;
 
-namespace EmployeeManagementSystem.Infrastructure.Data
+namespace EmployeeManagementSystem.API.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
