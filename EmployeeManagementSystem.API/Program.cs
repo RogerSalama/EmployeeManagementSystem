@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Fix for CS1061: Use AddEntityFrameworkStores instead of AddEntityFrameworkStore
+//hena ana salaht error kan maktoob badal ApplicationUser ( ely hwa class gowa file account ely fe entities ) Account we makansh 2areeha  
 builder.Services.AddIdentity<Account, IdentityRole>(options =>
 {
     // Password stuff
@@ -26,6 +27,11 @@ builder.Services.AddIdentity<Account, IdentityRole>(options =>
 
     // must have a unique email for the user
     options.User.RequireUniqueEmail = true;
+
+    // Lockout settings
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5); // Lockout duration
+    options.Lockout.MaxFailedAccessAttempts = 5;                      // Max failed attempts
+    options.Lockout.AllowedForNewUsers = true;                        // Apply lockout to new users too
 })
 .AddEntityFrameworkStores<ApplicationDbContext>() // Correct method name
 .AddDefaultTokenProviders();
