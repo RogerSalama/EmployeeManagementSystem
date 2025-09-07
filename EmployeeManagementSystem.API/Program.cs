@@ -10,7 +10,7 @@ using System;
 var builder = WebApplication.CreateBuilder(args);
 
 // EF Core + Identity
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<DbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Fix for CS1061: Use AddEntityFrameworkStores instead of AddEntityFrameworkStore
@@ -33,7 +33,7 @@ builder.Services.AddIdentity<Account, IdentityRole>(options =>
     options.Lockout.MaxFailedAccessAttempts = 5;                      // Max failed attempts
     options.Lockout.AllowedForNewUsers = true;                        // Apply lockout to new users too
 })
-.AddEntityFrameworkStores<ApplicationDbContext>() // Correct method name
+.AddEntityFrameworkStores<DbContext>() 
 .AddDefaultTokenProviders();
 
 // Add services to the container.
