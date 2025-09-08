@@ -251,7 +251,7 @@ namespace EmployeeManagementSystem.API.Migrations
                         column: x => x.ManagerID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Employee_VacationLevel_Vacation_Level_ID",
                         column: x => x.Vacation_Level_ID,
@@ -417,7 +417,7 @@ namespace EmployeeManagementSystem.API.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -461,7 +461,7 @@ namespace EmployeeManagementSystem.API.Migrations
                         column: x => x.AwaitingApproval,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_VacationRequest_Employee_EmployeeID",
                         column: x => x.EmployeeID,
@@ -517,7 +517,7 @@ namespace EmployeeManagementSystem.API.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -554,7 +554,7 @@ namespace EmployeeManagementSystem.API.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Overtime_OvertimeRule_OvertimeRuleID",
                         column: x => x.OvertimeRuleID,
@@ -597,13 +597,13 @@ namespace EmployeeManagementSystem.API.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Payroll_item_Payroll_PayID",
                         column: x => x.PayID,
                         principalTable: "Payroll",
                         principalColumn: "PayID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -634,13 +634,13 @@ namespace EmployeeManagementSystem.API.Migrations
                         column: x => x.EmployeeID,
                         principalTable: "Employee",
                         principalColumn: "EmployeeID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_EmployeeProject_Project_ProjectID",
                         column: x => x.ProjectID,
                         principalTable: "Project",
                         principalColumn: "ProjectID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -669,7 +669,7 @@ namespace EmployeeManagementSystem.API.Migrations
                         column: x => x.RequestID,
                         principalTable: "VacationRequest",
                         principalColumn: "RequestID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.InsertData(

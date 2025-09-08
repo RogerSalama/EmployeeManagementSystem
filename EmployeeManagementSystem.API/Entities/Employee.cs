@@ -24,7 +24,7 @@ public class Employee
     public int RoleLevel { get; set; }
     //public Role Role { get; set; } //el identity table does this shit on its own
 
-    public int ManagerID { get; set; }
+    public int? ManagerID { get; set; }
     [ForeignKey("ManagerID")]
     public Employee Manager { get; set; }
 

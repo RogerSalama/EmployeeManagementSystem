@@ -44,25 +44,10 @@ namespace EmployeeManagementSystem.API.Data
     {
         public ApplicationDbContext CreateDbContext(string[] args)
         {
-            // Start at the assembly location (bin/Debug/net8.0)
-            var basePath = Directory.GetCurrentDirectory();
-
-            // Walk upwards until we find the API project folder
-            string? solutionRoot = FindProjectRoot(basePath, "EmployeeManagementSystem.API");
-
-            if (solutionRoot == null)
-            {
-                throw new Exception("Could not find EmployeeManagementSystem.API folder!");
-            }
-
-            Console.WriteLine("API Path: " + solutionRoot);
-
-            var configPath = Path.Combine(solutionRoot, "appsettings.json");
-            Console.WriteLine("Looking for: " + configPath);
-
+            // Load appsettings.json
             var config = new ConfigurationBuilder()
-                .SetBasePath(solutionRoot)
-                .AddJsonFile("appsettings.json", optional: false)
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
                 .Build();
 
             var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
@@ -70,24 +55,5 @@ namespace EmployeeManagementSystem.API.Data
 
             return new ApplicationDbContext(optionsBuilder.Options);
         }
-
-        private string? FindProjectRoot(string startPath, string projectFolderName)
-        {
-            var dir = new DirectoryInfo(startPath);
-
-            while (dir != null)
-            {
-                var candidate = Path.Combine(dir.FullName, projectFolderName);
-                if (Directory.Exists(candidate))
-                {
-                    return candidate;
-                }
-                dir = dir.Parent;
-            }
-
-            return null;
-        }
     }
-
-
 }

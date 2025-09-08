@@ -4,6 +4,7 @@ using EmployeeManagementSystem.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManagementSystem.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250908162546_Updated-Database")]
+    partial class UpdatedDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -125,7 +128,7 @@ namespace EmployeeManagementSystem.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ManagerID")
+                    b.Property<int>("ManagerID")
                         .HasColumnType("int");
 
                     b.Property<string>("Military_Status")
@@ -863,7 +866,9 @@ namespace EmployeeManagementSystem.API.Migrations
                 {
                     b.HasOne("Employee", "Manager")
                         .WithMany()
-                        .HasForeignKey("ManagerID");
+                        .HasForeignKey("ManagerID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ApplicationUser", "User")
                         .WithOne("Employee")
