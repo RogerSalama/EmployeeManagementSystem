@@ -2,6 +2,7 @@
 //using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 using EmployeeManagementSystem.API.DataTransferObjects;
+using EmployeeManagementSystem.API.Services;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -16,32 +17,38 @@ namespace EmployeeManagementSystem.API.Controllers
     {
         // IConfiguration is a built in .net service that allows access to settings from 'appsettings.json' (stores private keys or data)
         private readonly IConfiguration _config;
+        private readonly LockoutService _lockoutService;
 
-
-        // Hardcoded users for now
-        private readonly Dictionary<string, string> _users = new()
-        {
-            { "besheer", "1234" },
-            { "saif", "5678" }
-        };
-
-        public AuthController (IConfiguration config)
+        
+        public AuthController (IConfiguration config, LockoutService lockoutService)
         {
             _config = config;
+            _lockoutService = lockoutService;
         }
+
 
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
-            if (_users.ContainsKey(request.Email) &&
-                _users[request.Email] == request.Password)
+            // First, check if user is locked out
+            if (await _lockoutService.IsLockedOutAsync(request.Email))
             {
-                var token = GenerateJwtToken(request.Email);
-                return Ok(new { token });
+                return Unauthorized("Your account is locked. Please wait until the lockout period ends or contact support.");
             }
 
-            return Unauthorized("Invalid email or password");
+            // Then, validate password (and update lockout state internally)
+            var isLoginSuccessful = await _lockoutService.CheckPasswordAndLockoutAsync(request.Email, request.Password);
+
+            if (!isLoginSuccessful)
+            {
+                return Unauthorized("Invalid email or password."); // GUI can display this
+            }
+
+            // If successful, issue JWT token
+            var token = GenerateJwtToken(request.Email);
+            return Ok(new { token });
         }
+
 
         private string GenerateJwtToken(string email)
         {

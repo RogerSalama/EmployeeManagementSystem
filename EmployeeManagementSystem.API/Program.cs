@@ -6,6 +6,7 @@ using EmployeeManagementSystem.Entities;
 //using EmployeeManagementSystem.Desktop.Models;
 //using EmployeeManagementSystem.Data; // Ensure this namespace is added for AppDbContext
 using System;
+using EmployeeManagementSystem.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,7 +50,7 @@ builder.Services.AddAuthorization(options =>
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.AddScoped<LockoutService>();
 var app = builder.Build();
 
 // 5. Seed roles, users, and claims
