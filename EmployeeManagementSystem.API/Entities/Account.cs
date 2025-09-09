@@ -10,4 +10,7 @@ public class ApplicationUser : IdentityUser
     // optional: link back to Employee
     public int? EmployeeID { get; set; }
     public Employee Employee { get; set; }
+
+    public int LockoutCycleCount = 0;
+
 }

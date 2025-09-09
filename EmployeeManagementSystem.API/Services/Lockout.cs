@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using EmployeeManagementSystem.API.Data;
 using System;
 using System.Threading.Tasks;
 

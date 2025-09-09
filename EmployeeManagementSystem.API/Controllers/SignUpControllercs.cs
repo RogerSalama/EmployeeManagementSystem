@@ -1,17 +1,40 @@
 using System.Runtime.InteropServices;
+using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
+using EmployeeManagementSystem.API.DataTransferObjects;
+using EmployeeManagementSystem.API.Services;
+using EmployeeManagementSystem.API.Data;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
-// In SDK-style projects such as this one, several assembly attributes that were historically
-// defined in this file are now automatically added during build and populated with
-// values defined in project properties. For details of which attributes are included
-// and how to customise this process see: https://aka.ms/assembly-info-properties
 
+namespace EmployeeManagementSystem.API.Controllers
+{
+    [ApiController]
+    [Route("api/signup")]
+    public class SignupController : ControllerBase
+    {
+        private readonly SignUpService _signupService;
 
-// Setting ComVisible to false makes the types in this assembly not visible to COM
-// components.  If you need to access a type in this assembly from COM, set the ComVisible
-// attribute to true on that type.
+        public SignupController(SignUpService signupService)
+        {
+            _signupService = signupService;
+        }
 
-[assembly: ComVisible(false)]
+        [HttpPost]
+        public async Task<IActionResult> Register([FromBody] SignUpRequest request)
+        {
+            var result = await _signupService.RegisterUserAsync(request.Email, request.Password, request.UserName);
 
-// The following GUID is for the ID of the typelib if this project is exposed to COM.
+            if (!result.Success)
+            {
+                return BadRequest(new { message = result.ErrorMessage });
+            }
 
-[assembly: Guid("eb05b2ac-7300-413f-b105-1525307a0246")]
+            return Ok(new { message = "Account created successfully." });
+        }
+    }
+}
