@@ -1,8 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using EmployeeManagementSystem.Infrastructure.Data; // <-- adjust if ApplicationDbContext is elsewhere
+using EmployeeManagementSystem.Infrastructure.Data;
+using EmployeeManagementSystem.API.Services; // <-- adjust if ApplicationDbContext is elsewhere
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Just a background service for the Punching System
+builder.Services.AddHostedService<PunchService>();
+
 
 // 1. Add DbContext (make sure "DefaultConnection" exists in appsettings.json)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
