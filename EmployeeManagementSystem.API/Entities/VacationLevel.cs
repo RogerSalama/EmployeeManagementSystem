@@ -11,5 +11,7 @@ namespace EmployeeManagementSystem.Entities
         public int Type1_Days { get; set; }
 
         public int Type2_Days { get; set; }
+
+        /// ghir el fel diagram ??who changed it and why
     }
 }

@@ -15,7 +15,7 @@ namespace EmployeeManagementSystem.Entities
         public int ContractID { get; set; }
         public int EmployeeID { get; set; }
         [ForeignKey("EmployeeID")]
-        [InverseProperty("SalaryContracts")] //Since there are 2 Employee properties, this specifies what this belongs to
+        [InverseProperty("SalaryContracts")] //Since there are 2 Employee properties, this specifies what this belongs to (msh fahem ya roger)
         public Employee Employee { get; set; }
         [Precision(9, 2)]
         public decimal Amount { get; set; }

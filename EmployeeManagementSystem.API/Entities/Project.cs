@@ -15,14 +15,14 @@ namespace EmployeeManagementSystem.Entities
         public int ProjectID { get; set; }
         public int ProjectHead { get; set; }
         [ForeignKey("ProjectHead")]
-        public Employee Employee { get; set; }
+        public Employee Employee { get; set; } //msh el mfrood tb2a list??
         public string ProjectName { get; set; }
         public string CustomerName { get; set; }
         public string Status { get; set; }  //Turn into enum
         [Precision(9, 2)]
-        public decimal Revenue { get; set; }
+        public decimal Revenue { get; set; } = 0; //fel awel khales
         [Precision(9, 2)]
-        public decimal Expenses { get; set; }
+        public decimal Expenses { get; set; } = 0; //fel awel khales brdo
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     }
 }
