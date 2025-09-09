@@ -1,6 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeManagementSystem.Entities
 {
@@ -13,11 +14,11 @@ namespace EmployeeManagementSystem.Entities
         public VacationRequest VacationRequest { get; set; }
 
         // Part of Composite Key
-        public int ApprovedByRole { get; set; }
-        [ForeignKey("ApprovedByRole")]
-        //public Role Role { get; set; }
+        // Composite Key (Part 2) → FK to AspNetRoles
+        public string ApprovedByRoleId { get; set; }
 
-        // FK → Employee (who approved)
+        [ForeignKey(nameof(ApprovedByRoleId))]
+        public IdentityRole ApprovedByRole { get; set; }
         public int ApprovedByID { get; set; }
         [ForeignKey("ApprovedByID")]
         public Employee ApprovedByEmployee { get; set; }
