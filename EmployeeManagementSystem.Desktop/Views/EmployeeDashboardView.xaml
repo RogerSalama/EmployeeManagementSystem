@@ -1,0 +1,15 @@
+﻿<Window x:Class="EmployeeManagementSystem.Desktop.Views.EmployeeDashboardView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:EmployeeManagementSystem.Desktop.Views"
+        mc:Ignorable="d"
+        Title="EmployeeDashboardView" Height="450" Width="800">
+    <Grid>
+        <Button x:Name="CheckInButton" Content="CheckIn" HorizontalAlignment="Left" Height="21" Margin="53,119,0,0" VerticalAlignment="Top" Width="86" Click="ChechInButton_Click"/>
+        <Button x:Name="CheckOutButton" Content="CheckOut" HorizontalAlignment="Left" Height="21" Margin="205,119,0,0" VerticalAlignment="Top" Width="86" Click="CheckOutButton_Click"/>
+        <ListBox x:Name="ProjectsList" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="53,48,509,320" SelectionChanged="ListBox_SelectionChanged"/>
+
+    </Grid>
+</Window>
