@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeManagementSystem.Entities
 {
-    [PrimaryKey(nameof(RequestID), nameof(ApprovedByRole))]
+    [PrimaryKey(nameof(RequestID), nameof(ApprovedByRoleId))]
     public class VacationApproval
     {
         // Part of Composite Key

@@ -36,24 +36,17 @@ namespace EmployeeManagementSystem.API.Data
         public DbSet<VacationType_2> VacationType_2 { get; set; }
         public DbSet<VacationRequest> VacationRequest { get; set; }
 
-    
-        
-    }
 
-    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-    {
-        public ApplicationDbContext CreateDbContext(string[] args)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            // Load appsettings.json
-            var config = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
-                .Build();
+            base.OnModelCreating(builder);
 
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-
-            return new ApplicationDbContext(optionsBuilder.Options);
+            // Apply "NoAction" as the default for all relationships
+            foreach (var foreignKey in builder.Model.GetEntityTypes()
+                .SelectMany(e => e.GetForeignKeys()))
+            {
+                foreignKey.DeleteBehavior = DeleteBehavior.NoAction;
+            }
         }
     }
 }
