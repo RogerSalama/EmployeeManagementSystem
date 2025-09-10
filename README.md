@@ -11,7 +11,8 @@ Right click on project name, open "Manage NuGet packages", download the followin
 - Microsoft.EntityFrameworkCore  
 - Microsoft.EntityFrameworkCore.Tools  
 - Microsoft.EntityFrameworkCore.Design  
-- Microsoft.EntityFrameworkCore.SqlServer  
+- Microsoft.EntityFrameworkCore.SqlServer
+- Newtonsoft.Json
 
 
 On the terminal run these commands (note : change the path to the directory where EmployeeManagementSystem.API.csproj is stored )
