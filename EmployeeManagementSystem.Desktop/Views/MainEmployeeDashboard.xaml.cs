@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EmployeeManagementSystem.Desktop.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,10 +25,21 @@ namespace EmployeeManagementSystem.Desktop
             InitializeComponent();
 
             // In real app, bind to a ViewModel with actual data
-            DataContext = new DashboardViewModel();
+            DataContext = new EmployeeDashboardViewModel();
         }
 
         private void Check_in_button_Click(object sender, RoutedEventArgs e)
+
+        {
+
+        }
+
+        private void Check_in_button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Check_out_button_Click(object sender, RoutedEventArgs e)
         {
 
         }

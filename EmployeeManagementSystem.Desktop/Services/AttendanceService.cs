@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -28,8 +29,8 @@ namespace EmployeeManagementSystem.Desktop.Services
             );
 
 
-            _httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", token);
+            //_httpClient.DefaultRequestHeaders.Authorization =
+            //new AuthenticationHeaderValue("Bearer", token);
 
         }
 
@@ -38,6 +39,7 @@ namespace EmployeeManagementSystem.Desktop.Services
         // =========================
         public async Task<bool> CheckInAsync(Guid projectId)
         {
+            System.Diagnostics.Debug.WriteLine("Reached CheckInAsync, service called");
             var data = new { projectId = projectId };
 
             var json = JsonConvert.SerializeObject(data);
@@ -51,22 +53,22 @@ namespace EmployeeManagementSystem.Desktop.Services
         // =========================
         // CHECK-OUT API REQUEST
         // =========================
-        //public async Task<bool> CheckOutAsync(List<TimeLogInput> timeLogs)
-        //{
-        //    var data = new { timeLogs = timeLogs };
+        public async Task<bool> CheckOutAsync(List<TimeLogInput> timeLogs)
+        {
+            var data = new { timeLogs = timeLogs };
 
-        //    var json = JsonConvert.SerializeObject(data);
-        //    var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var json = JsonConvert.SerializeObject(data);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-        //    var response = await _httpClient.PostAsync("attendance/checkout", content);
+            var response = await _httpClient.PostAsync("attendance/checkout", content);
 
-        //    return response.IsSuccessStatusCode;
-        //}
+            return response.IsSuccessStatusCode;
+        }
     }
 
-    //public class TimeLogInput
-    //{
-    //    public Guid ProjectId { get; set; }
-    //    public int DurationMinutes { get; set; }
-    //}
+    public class TimeLogInput
+    {
+        public Guid ProjectId { get; set; }
+    public int DurationMinutes { get; set; }
+}
 }

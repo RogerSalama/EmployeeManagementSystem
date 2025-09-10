@@ -42,5 +42,10 @@ namespace EmployeeManagementSystem.Desktop.Views
             CheckInButton.IsEnabled = true;
 
         }
+
+        private void ChechInButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -70,11 +70,19 @@
                             <TextBlock Text="6.5 hours today" FontSize="16" FontWeight="Bold" Margin="0,4,0,0"/>
                         </StackPanel>
 
-                        <Button x:Name="Check_in_button" Content="Check In"
-                                Width="100" Height="32"
-                                Background="#2F9B5E" Foreground="White"
-                                HorizontalAlignment="Right" VerticalAlignment="Center"
-                                DockPanel.Dock="Right" Click="Check_in_button_Click"/>
+                        <Grid HorizontalAlignment="Right" VerticalAlignment="Center">
+                            <Button x:Name="Check_in_button" Content="Check In"
+            Width="100" Height="32"
+            Background="#2F9B5E" Foreground="White"
+            Command="{Binding CheckInCommand}"
+            Visibility="{Binding CheckInVisibility}" />
+
+                            <Button x:Name="Check_out_button" Content="Check Out"
+            Width="100" Height="32"
+            Background="#FF6B6B" Foreground="White"
+            Command="{Binding CheckOutCommand}"
+            Visibility="{Binding CheckOutVisibility}" Click="Check_out_button_Click" />
+                        </Grid>
                     </DockPanel>
                 </Border>
 
