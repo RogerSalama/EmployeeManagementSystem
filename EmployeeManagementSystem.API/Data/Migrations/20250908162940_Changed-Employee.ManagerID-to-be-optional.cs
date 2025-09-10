@@ -53,7 +53,7 @@ namespace EmployeeManagementSystem.API.Migrations
                 column: "ManagerID",
                 principalTable: "Employee",
                 principalColumn: "EmployeeID",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.NoAction);
         }
     }
 }
