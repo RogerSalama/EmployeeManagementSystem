@@ -21,10 +21,10 @@ public class Employee
     //public SalaryContract SalaryContract { get; set; }
     public ICollection<SalaryContract> SalaryContracts { get; set; } = new List<SalaryContract>(); //employee has collection of salary contracts to show contaract history
 
-    public int RoleLevel { get; set; }
+    //public int RoleLevel { get; set; }
     //public Role Role { get; set; } //el identity table does this shit on its own
 
-    public int ManagerID { get; set; }
+    public int? ManagerID { get; set; }
     [ForeignKey("ManagerID")]
     public Employee Manager { get; set; }
 
@@ -33,7 +33,7 @@ public class Employee
 
     public int Vacation_Level_ID { get; set; }
     [ForeignKey("Vacation_Level_ID")]
-    public VacationLevel Vacation_Level { get; set; }
+    public VacationLevel Vacation_Level { get; set; } //yaani eh?
 
     public int EmployementStatus { get; set; }
 

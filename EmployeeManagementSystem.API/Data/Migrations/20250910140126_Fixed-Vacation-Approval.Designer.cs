@@ -4,6 +4,7 @@ using EmployeeManagementSystem.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManagementSystem.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250910140126_Fixed-Vacation-Approval")]
+    partial class FixedVacationApproval
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -854,19 +857,18 @@ namespace EmployeeManagementSystem.API.Migrations
                 {
                     b.HasOne("Employee", "Manager")
                         .WithMany()
-                        .HasForeignKey("ManagerID")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ManagerID");
 
                     b.HasOne("ApplicationUser", "User")
                         .WithOne("Employee")
                         .HasForeignKey("Employee", "UserID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeManagementSystem.Entities.VacationLevel", "Vacation_Level")
                         .WithMany()
                         .HasForeignKey("Vacation_Level_ID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Manager");
@@ -881,13 +883,13 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeManagementSystem.Entities.Attendance", "Attendance")
                         .WithMany()
                         .HasForeignKey("SessionID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Attendance");
@@ -900,7 +902,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -910,19 +912,18 @@ namespace EmployeeManagementSystem.API.Migrations
                 {
                     b.HasOne("Employee", "ApprovedByEmployee")
                         .WithMany()
-                        .HasForeignKey("ApprovedBy")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .HasForeignKey("ApprovedBy");
 
                     b.HasOne("EmployeeManagementSystem.Entities.BonusType", "BonusType")
                         .WithMany()
                         .HasForeignKey("BonusTypeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApprovedByEmployee");
@@ -937,7 +938,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -948,19 +949,19 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeManagementSystem.Entities.Project", "Project")
                         .WithMany()
                         .HasForeignKey("ProjectID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeManagementSystem.Entities.Attendance", "Attendance")
                         .WithMany()
                         .HasForeignKey("SessionID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Attendance");
@@ -975,25 +976,25 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "ApprovedByEmployee")
                         .WithMany()
                         .HasForeignKey("ApprovedBy")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeManagementSystem.Entities.OvertimeRule", "OvertimeRule")
                         .WithMany()
                         .HasForeignKey("OvertimeRuleID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeManagementSystem.Entities.Attendance", "AttendanceSession")
                         .WithMany()
                         .HasForeignKey("SessionID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApprovedByEmployee");
@@ -1010,7 +1011,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -1021,25 +1022,25 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("EmployeeManagementSystem.Entities.BonusType", "BonusType")
                         .WithMany()
                         .HasForeignKey("BonusTypeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Employee", "EmployeeCreatedBY")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeManagementSystem.Entities.Payroll", "Payroll")
                         .WithMany()
                         .HasForeignKey("PayID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("BonusType");
@@ -1056,7 +1057,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("ProjectHead")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -1067,13 +1068,13 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "EmployeeCreatedBy")
                         .WithMany()
                         .HasForeignKey("CreatedBy")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Employee", "Employee")
                         .WithMany("SalaryContracts")
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -1086,7 +1087,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -1097,19 +1098,19 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "ApprovedByEmployee")
                         .WithMany()
                         .HasForeignKey("ApprovedByID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", "ApprovedByRole")
                         .WithMany()
                         .HasForeignKey("ApprovedByRoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EmployeeManagementSystem.Entities.VacationRequest", "VacationRequest")
                         .WithMany()
                         .HasForeignKey("RequestID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ApprovedByEmployee");
@@ -1124,13 +1125,13 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "Manager")
                         .WithMany()
                         .HasForeignKey("AwaitingApproval")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -1143,7 +1144,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Employee", "Employee")
                         .WithMany()
                         .HasForeignKey("EmployeeID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Employee");
@@ -1154,7 +1155,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1163,7 +1164,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1172,7 +1173,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1181,13 +1182,13 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -1196,7 +1197,7 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasOne("ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

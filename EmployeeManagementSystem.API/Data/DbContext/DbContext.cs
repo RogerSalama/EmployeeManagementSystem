@@ -36,58 +36,17 @@ namespace EmployeeManagementSystem.API.Data
         public DbSet<VacationType_2> VacationType_2 { get; set; }
         public DbSet<VacationRequest> VacationRequest { get; set; }
 
-    
-        
-    }
 
-    public class ApplicationDbContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-    {
-        public ApplicationDbContext CreateDbContext(string[] args)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            // Start at the assembly location (bin/Debug/net8.0)
-            var basePath = Directory.GetCurrentDirectory();
+            base.OnModelCreating(builder);
 
-            // Walk upwards until we find the API project folder
-            string? solutionRoot = FindProjectRoot(basePath, "EmployeeManagementSystem.API");
-
-            if (solutionRoot == null)
+            // Apply "NoAction" as the default for all relationships
+            foreach (var foreignKey in builder.Model.GetEntityTypes()
+                .SelectMany(e => e.GetForeignKeys()))
             {
-                throw new Exception("Could not find EmployeeManagementSystem.API folder!");
+                foreignKey.DeleteBehavior = DeleteBehavior.NoAction;
             }
-
-            Console.WriteLine("API Path: " + solutionRoot);
-
-            var configPath = Path.Combine(solutionRoot, "appsettings.json");
-            Console.WriteLine("Looking for: " + configPath);
-
-            var config = new ConfigurationBuilder()
-                .SetBasePath(solutionRoot)
-                .AddJsonFile("appsettings.json", optional: false)
-                .Build();
-
-            var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
-            optionsBuilder.UseSqlServer(config.GetConnectionString("DefaultConnection"));
-
-            return new ApplicationDbContext(optionsBuilder.Options);
-        }
-
-        private string? FindProjectRoot(string startPath, string projectFolderName)
-        {
-            var dir = new DirectoryInfo(startPath);
-
-            while (dir != null)
-            {
-                var candidate = Path.Combine(dir.FullName, projectFolderName);
-                if (Directory.Exists(candidate))
-                {
-                    return candidate;
-                }
-                dir = dir.Parent;
-            }
-
-            return null;
         }
     }
-
-
 }

@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using EmployeeManagementSystem.API.DataTransferObjects;
+using Microsoft.AspNetCore.Cors;
+using EmployeeManagementSystem.API.Services;
+using System.Diagnostics.CodeAnalysis;
 
 namespace EmployeeManagementSystem.API.Controllers
 {
@@ -8,19 +11,30 @@ namespace EmployeeManagementSystem.API.Controllers
     [Route("api/attendance")]
     public class AttendanceController : ControllerBase
     {
-        [HttpPost("checkin")]
-        public async Task<IActionResult> CheckIn([FromBody] CheckInRequest request)
+        private readonly PunchService _punchService;
+        private readonly timeStamp _timestamp;
+        public AttendanceController(PunchService punchService, timeStamp timestamp)
         {
-            // TODO: Process check-in
-            return Ok();
+            _punchService = punchService;
+            _timestamp = timestamp;
         }
 
-
-        [HttpPost("checkout")]
-        public async Task<IActionResult> CheckOut([FromBody] CheckOutRequest request)
+        [HttpPost("checkin")] 
+        public async Task<IActionResult> CheckIn()
         {
-            // TODO: Process check-out
-            return Ok();
+            // Generate timestamp (UTC is preferred for consistency)
+            var timestamp = await _timestamp.GetCurrentTimeAsync();
+
+            // Call your service logic with timestamp
+            var result = await _punchService.PunchingSystem(timestamp);
+           
+            if (result)
+            {
+                return Ok(new { message = "Timestamp stored!", timestamp });
+            }
+            else { return BadRequest(); }
+             
+            
         }
     }
 }

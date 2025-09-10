@@ -17,5 +17,6 @@ namespace EmployeeManagementSystem.Entities
         public Employee Employee { get; set; }
 
         public DateTime TerminationDate { get; set; }
+        // ana shayef enena nzwd terminated by meen
     }
 }

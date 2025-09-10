@@ -8,7 +8,7 @@ public class ApplicationUser : IdentityUser
     public bool IsActive { get; set; } = true;
 
     // optional: link back to Employee
-    public int? EmployeeID { get; set; }
+    //public int? EmployeeID { get; set; }
     public Employee Employee { get; set; }
 
     public int LockoutCycleCount = 4;
