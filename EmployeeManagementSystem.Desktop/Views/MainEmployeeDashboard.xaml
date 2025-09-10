@@ -70,6 +70,18 @@
                             <TextBlock Text="6.5 hours today" FontSize="16" FontWeight="Bold" Margin="0,4,0,0"/>
                         </StackPanel>
 
+                        <StackPanel Width="461" Height="22">
+                            <!-- PROJECT SELECTOR -->
+                            <ComboBox Width="200" VerticalAlignment="Center" HorizontalAlignment="Center"
+                      ItemsSource="{Binding Projects}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding SelectedProject, Mode=TwoWay}"
+                      SelectedValuePath="Id"
+                      Margin="0,0,10,0"/>
+                        </StackPanel>
+
+
+
                         <Grid HorizontalAlignment="Right" VerticalAlignment="Center">
                             <Button x:Name="Check_in_button" Content="Check In"
             Width="100" Height="32"

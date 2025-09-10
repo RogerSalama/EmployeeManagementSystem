@@ -15,7 +15,7 @@ namespace EmployeeManagementSystem.Desktop.Services
     {
         private readonly HttpClient _httpClient;
 
-        public AttendanceService()
+        public AttendanceService(string bearerToken = null)
         {
             _httpClient = new HttpClient
             {
@@ -29,8 +29,9 @@ namespace EmployeeManagementSystem.Desktop.Services
             );
 
 
-            //_httpClient.DefaultRequestHeaders.Authorization =
-            //new AuthenticationHeaderValue("Bearer", token);
+            if (!string.IsNullOrEmpty(bearerToken))
+                _httpClient.DefaultRequestHeaders.Authorization =
+                    new AuthenticationHeaderValue("Bearer", bearerToken);
 
         }
 

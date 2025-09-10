@@ -26,6 +26,14 @@ namespace EmployeeManagementSystem.Desktop
 
             // In real app, bind to a ViewModel with actual data
             DataContext = new EmployeeDashboardViewModel();
+            this.Loaded += async (s, e) =>
+            {
+                if (this.DataContext is EmployeeDashboardViewModel vm)
+                {
+                    // pass real API base URL and token setup if needed
+                    await vm.InitializeAsync();
+                }
+            };
         }
 
         private void Check_in_button_Click(object sender, RoutedEventArgs e)

@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace EmployeeManagementSystem.Desktop.Models
 {
-    internal class EmptyClass
+    public class ProjectDto
     {
+        public Guid Id { get; set; }
+        public string Name { get; set; }
     }
 }
