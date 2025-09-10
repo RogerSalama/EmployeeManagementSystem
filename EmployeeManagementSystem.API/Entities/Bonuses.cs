@@ -30,8 +30,6 @@ namespace EmployeeManagementSystem.Entities
         public DateTime? ApprovedAt { get; set; }
 
         [MaxLength(500)]
-        public string Reason { get; set; }
-
-        public DateTime BonusDate { get; set; }
+        public string? Reason { get; set; }
     }
 }

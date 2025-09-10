@@ -19,6 +19,6 @@ namespace EmployeeManagementSystem.Entities
         public DateTime? CheckOut { get; set; } //should be null while session is running wala ento shayfeen eh
 
         // Total time spent AFK (in minutes or as TimeSpan)
-        public TimeSpan AFK_Time { get; set; }
+        public TimeSpan? AFK_Time { get; set; }
     }
 }
