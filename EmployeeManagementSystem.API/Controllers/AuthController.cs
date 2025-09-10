@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 ﻿using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +26,7 @@ namespace EmployeeManagementSystem.API.Controllers
             _config = config;
             _lockoutService = lockoutService;
         }
+<<<<<<< Updated upstream
 
 
         [HttpPost("login")]
@@ -50,6 +52,8 @@ namespace EmployeeManagementSystem.API.Controllers
         }
 
 
+
+>>>>>>> Stashed changes
         private string GenerateJwtToken(string email)
         {
 
