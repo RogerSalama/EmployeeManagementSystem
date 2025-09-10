@@ -24,7 +24,6 @@ namespace EmployeeManagementSystem.Desktop
         {
             InitializeComponent();
 
-           
             DataContext = new EmployeeDashboardViewModel();
             this.Loaded += async (s, e) =>
             {
