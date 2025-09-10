@@ -11,6 +11,6 @@ public class ApplicationUser : IdentityUser
     public int? EmployeeID { get; set; }
     public Employee Employee { get; set; }
 
-    public int LockoutCycleCount = 0;
+    public int LockoutCycleCount = 4;
 
 }

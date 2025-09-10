@@ -24,7 +24,7 @@ namespace EmployeeManagementSystem.API.Controllers
             _signupService = signupService;
         }
 
-        [HttpPost]
+        [HttpPost("signup")]
         public async Task<IActionResult> Register([FromBody] SignUpRequest request)
         {
             var result = await _signupService.RegisterUserAsync(request.Email, request.Password, request.UserName);
