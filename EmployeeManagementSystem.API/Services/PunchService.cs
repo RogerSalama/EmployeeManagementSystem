@@ -16,6 +16,7 @@ namespace EmployeeManagementSystem.API.Services
         public async Task<bool> PunchingSystem(string timestamp)
         {
             _vector.Add(timestamp);
+            Console.WriteLine(_vector.Count);
             return true;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

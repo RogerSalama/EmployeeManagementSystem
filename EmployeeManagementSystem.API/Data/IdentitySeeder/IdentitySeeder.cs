@@ -6,7 +6,7 @@ public static class IdentitySeeder
     public static async Task SeedAsync(IServiceProvider services)
     {
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-        var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
+        var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 
         // 1. Define roles
         string[] roles = { "Admin", "Manager", "Employee", "Accountant" };
@@ -25,7 +25,7 @@ public static class IdentitySeeder
         var admin = await userManager.FindByEmailAsync(adminEmail);
         if (admin == null)
         {
-            admin = new IdentityUser
+            admin = new ApplicationUser
             {
                 UserName = "admin",
                 Email = adminEmail,

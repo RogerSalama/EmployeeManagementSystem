@@ -6,8 +6,10 @@ using EmployeeManagementSystem.Entities;
 //using EmployeeManagementSystem.Desktop.Models;
 //using EmployeeManagementSystem.Data; // Ensure this namespace is added for AppDbContext
 using System;
+using EmployeeManagementSystem.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Just a background service for the Punching System
 builder.Services.AddHostedService<PunchService>();
@@ -18,7 +20,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // 2. Add Identity (users + roles)
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
 
@@ -54,6 +56,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddHttpClient<timeStamp>();
+builder.Services.AddSingleton<PunchService>();
 var app = builder.Build();
 
 // 5. Seed roles, users, and claims
