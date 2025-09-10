@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -22,7 +23,8 @@ namespace EmployeeManagementSystem.Entities
         [ForeignKey("BonusTypeID")]
         public BonusType BonusType { get; set; }
         public int SourceID { get; set; }
-        public float Amount { get; set; }
+        [Precision(9, 2)]
+        public decimal Amount { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public int CreatedBy { get; set; }
         [ForeignKey("CreatedBy")]

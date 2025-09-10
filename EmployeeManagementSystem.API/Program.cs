@@ -1,7 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using EmployeeManagementSystem.Infrastructure.Data;
-using EmployeeManagementSystem.API.Services; // <-- adjust if ApplicationDbContext is elsewhere
+using EmployeeManagementSystem.API.Data;
+using EmployeeManagementSystem.Entities;
+//using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+//using EmployeeManagementSystem.Desktop.Models;
+//using EmployeeManagementSystem.Data; // Ensure this namespace is added for AppDbContext
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 

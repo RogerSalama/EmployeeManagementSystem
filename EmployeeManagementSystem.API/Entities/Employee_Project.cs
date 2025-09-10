@@ -27,8 +27,9 @@ namespace EmployeeManagementSystem.Entities
 
         public DateTime Date { get; set; } = DateTime.UtcNow.Date;
         public DateTime StartTime { get; set; } = DateTime.UtcNow;
-        public DateTime EndTime { get; set; } = DateTime.UtcNow;
+        public DateTime? EndTime { get; set; } = DateTime.UtcNow; //mullable till log ends wala eh?
         public DateTime AdjustedAt { get; set; } = DateTime.UtcNow;
+        
 
     }
 }

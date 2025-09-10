@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -18,7 +19,7 @@ namespace EmployeeManagementSystem.Entities
         public int BonusTypeID { get; set; }
         [ForeignKey("BonusTypeID")]
         public BonusType BonusType { get; set; }
-
+        [Precision(9, 2)]
         public decimal Amount { get; set; }
 
         // FK → Employee (manager who approved the bonus)

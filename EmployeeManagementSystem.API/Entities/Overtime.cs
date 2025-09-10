@@ -32,7 +32,7 @@ namespace EmployeeManagementSystem.Entities
         public OvertimeStatus Status { get; set; } = OvertimeStatus.Pending;
 
         // FK → Employee (manager who approved the overtime)
-        public int? ApprovedBy { get; set; }
+        public int ApprovedBy { get; set; } //lazem approval for overtime so not nullable
         [ForeignKey("ApprovedBy")]
         public Employee ApprovedByEmployee { get; set; }
 

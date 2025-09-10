@@ -22,8 +22,7 @@ namespace EmployeeManagementSystem.Entities
         [ForeignKey("ApprovedByID")]
         public Employee ApprovedByEmployee { get; set; }
 
-        public DateTime ApprovalDate { get; set; }
-        public string Decision { get; set; }   // Approved / Rejected
-        public string Reason { get; set; }
+        public DateTime? ApprovalDate { get; set; } //nullable lehad ma el manager yerod
+        public string? Decision { get; set; }   // Approved / Rejected and nullable lehad ma el manager yerod       
     }
 }
