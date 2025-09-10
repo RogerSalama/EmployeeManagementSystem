@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EmployeeManagementSystem.Entities
 {
-    [PrimaryKey(nameof(RequestID), nameof(ApprovedByRoleId))]
+    [PrimaryKey(nameof(RequestID), nameof(ApprovedByRoleID))]
     public class VacationApproval
     {
         // Part of Composite Key
@@ -15,9 +15,9 @@ namespace EmployeeManagementSystem.Entities
 
         // Part of Composite Key
         // Composite Key (Part 2) → FK to AspNetRoles
-        public string ApprovedByRoleId { get; set; }
+        public string ApprovedByRoleID { get; set; }
 
-        [ForeignKey(nameof(ApprovedByRoleId))]
+        [ForeignKey(nameof(ApprovedByRoleID))]
         public IdentityRole ApprovedByRole { get; set; }
         public int ApprovedByID { get; set; }
         [ForeignKey("ApprovedByID")]

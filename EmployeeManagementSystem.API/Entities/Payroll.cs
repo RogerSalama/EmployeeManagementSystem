@@ -21,7 +21,7 @@ namespace EmployeeManagementSystem.Entities
         public string PaymentStatus { get; set; } //Turn to enum
         public DateTime DateOfPayment { get; set; }
         [Precision(9, 2)]
-        public decimal FinalAmount { get; set; }
+        public decimal? FinalAmount { get; set; }
 
     }
 }
