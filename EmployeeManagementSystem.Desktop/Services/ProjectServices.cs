@@ -27,7 +27,7 @@ namespace EmployeeManagementSystem.Desktop.Services
         // GET assigned projects for logged-in employee
         public async Task<List<ProjectDto>> GetAssignedProjectsAsync()
         {
-            var resp = await _httpClient.GetAsync("employees/me/projects");
+            var resp = await _httpClient.GetAsync("employee/me/projects");
             resp.EnsureSuccessStatusCode();
             var json = await resp.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<ProjectDto>>(json);

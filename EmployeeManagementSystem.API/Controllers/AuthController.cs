@@ -49,12 +49,8 @@ namespace EmployeeManagementSystem.API.Controllers
             }
             // If successful, issue JWT token
             var token = _tokenGeneration.GenerateJwtToken(request.Email);
-            return Ok(new
-            {
-                token
-
-            }
-            }
+            return Ok(new { token });
+        }
 
 
     
