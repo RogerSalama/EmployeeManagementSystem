@@ -19,7 +19,7 @@ namespace EmployeeManagementSystem.API.Services
             _context = context;
         }
 
-        public string GenerateJwtToken(string email)
+        public string GenerateJwtToken(int employeeId)
         {
 
             // Reads the secret key (Jwt:Key) from appsettings.json.
@@ -32,10 +32,10 @@ namespace EmployeeManagementSystem.API.Services
 
             //I now want to get the employeeId
         
-
+     
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, email), // define the role from the email of the user
+                new Claim("EmployeeId", employeeId.ToString()), // define the role from the email of the user
                 new Claim(ClaimTypes.Role, "User")
             };
             var token = new JwtSecurityToken(

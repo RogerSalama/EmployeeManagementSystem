@@ -6,6 +6,7 @@ using EmployeeManagementSystem.API.Services;
 ﻿using Microsoft.AspNetCore.Http;
 //using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -49,8 +50,9 @@ namespace EmployeeManagementSystem.API.Controllers
                 return Unauthorized("Invalid email or password."); // GUI can display this
             }
             // If successful, issue JWT token
-            var user = await _userManager.Users.FirstOrDefaultAsync(u => u.Email == email);
-            var token = _tokenGeneration.GenerateJwtToken(request.Email);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
+            var employee = await _context.Employee.FirstOrDefaultAsync(u => u.UserID == user.Id);
+            var token = _tokenGeneration.GenerateJwtToken(employee.EmployeeID);
             return Ok(new { token });
 
          }
