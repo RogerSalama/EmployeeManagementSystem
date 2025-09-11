@@ -28,7 +28,7 @@ namespace EmployeeManagementSystem.API.Services
 
             var claims = new[]
             {
-                new Claim(ClaimTypes.Name, email),
+                new Claim(ClaimTypes.Name, email), // define the role from the email of the user
                 new Claim(ClaimTypes.Role, "User")
             };
 
