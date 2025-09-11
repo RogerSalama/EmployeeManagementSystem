@@ -23,6 +23,7 @@ namespace EmployeeManagementSystem.API.Controllers
             //_checkinService = CheckinService;
         }
 
+
         //[HttpPost("checkin")] 
         //public async Task<IActionResult> CheckIn()
         //{
@@ -44,30 +45,28 @@ namespace EmployeeManagementSystem.API.Controllers
         [Authorize(Roles = "Employee")]
         public async Task<IActionResult> CheckIn([FromBody] dynamic request)
         {
-            
-            Guid projectId;
+
+            int projectId;
             try
             {
-                projectId = Guid.Parse((string)request.projectId);
+                projectId = int.Parse((string)request.projectId);
             }
             catch
             {
                 return BadRequest(new { message = "Invalid or missing ProjectId" });
             }
 
-           
+
             var employeeIdClaim = User.FindFirst("EmployeeId")?.Value;
             if (string.IsNullOrEmpty(employeeIdClaim))
                 return Unauthorized(new { message = "Employee ID not found in token." });
 
             var employeeId = int.Parse(employeeIdClaim);
 
-            var timestamp = DateTimeOffset.UtcNow;
+            var timestamp = DateTime.UtcNow;
 
-            // TODO: Ensure there is no active session
 
-            // Call service to create Attendance session and get SessionID
-            // var sessionId = await _punchService.CreateSessionAsync(employeeId, timestamp, projectId);
+            var sessionId = await _punchService.ProjectCheckin(timestamp, employeeId, projectId);
 
             if (sessionId != null)
             {
@@ -76,6 +75,7 @@ namespace EmployeeManagementSystem.API.Controllers
 
             return BadRequest(new { message = "Check-in failed. You may already have an active session." });
         }
+
 
         [HttpPost("change-proj")]
         [Authorize(Roles = "Employee")]

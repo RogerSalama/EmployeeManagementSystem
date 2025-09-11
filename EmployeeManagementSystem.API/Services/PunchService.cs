@@ -5,7 +5,7 @@ using EmployeeManagementSystem.Entities;
 using Microsoft.EntityFrameworkCore;
 namespace EmployeeManagementSystem.API.Services
 {
-    public class PunchService : BackgroundService
+    public class PunchService
     {
         private readonly timeStamp _timestamp;
 
@@ -49,28 +49,7 @@ namespace EmployeeManagementSystem.API.Services
 
             return attendance.SessionID;
         }
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
-        {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                // get the live time
-                string timeNow = await _timestamp.GetCurrentTimeAsync();
-
-
-                if (timeNow == "00:00:00")
-                {
-                    PunchEOD();
-
-                    // ⏳ wait 1 minute so we don’t trigger PunchEOD multiple times at 00:00
-                    await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
-                }
-                else
-                {
-                    // ⏳ check again in 10 seconds
-                    await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
-                }
-            }
-        }
+       
         public async void PunchEOD()
         {
             // 1️ Take first and last elements

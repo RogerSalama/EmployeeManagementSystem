@@ -10,11 +10,6 @@ using EmployeeManagementSystem.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-
-// Just a background service for the Punching System
-builder.Services.AddHostedService<PunchService>();
-
-
 // 1. Add DbContext (make sure "DefaultConnection" exists in appsettings.json)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -57,7 +52,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddHttpClient<timeStamp>();
-builder.Services.AddSingleton<PunchService>();
+builder.Services.AddScoped<PunchService>();
 builder.Services.AddScoped<LockoutService>();
 var app = builder.Build();
 
@@ -67,6 +62,8 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     await IdentitySeeder.SeedAsync(services);
 }
+builder.Services.AddOpenApiDocument(options => 
+    options.AddSecurity("Bearer", new openapi));
 
 // 6. Configure middleware
 if (app.Environment.IsDevelopment())
