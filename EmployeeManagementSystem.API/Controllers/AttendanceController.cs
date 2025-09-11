@@ -20,21 +20,20 @@ namespace EmployeeManagementSystem.API.Controllers
         }
 
         [HttpPost("checkin")] 
-        public async Task<IActionResult> CheckIn()
-        {
+        public async Task<IActionResult> CheckIn([FromBody] CheckInRequest request)
+        {   
             // Generate timestamp (UTC is preferred for consistency)
             var timestamp = await _timestamp.GetCurrentTimeAsync();
 
             // Call your service logic with timestamp
-            var result = await _punchService.PunchingSystem(timestamp);
+            var result = await _punchService.ProjectCheckin(timestamp);
            
             if (result)
             {
-                return Ok(new { message = "Timestamp stored!", timestamp });
+                return Ok(new { message = "Session started", timestamp });
             }
             else { return BadRequest(); }
              
-            
         }
     }
 }

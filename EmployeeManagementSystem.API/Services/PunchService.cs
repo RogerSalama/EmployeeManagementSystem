@@ -1,5 +1,8 @@
-﻿using System.Diagnostics.Metrics;
-
+﻿using System;
+using System.Diagnostics.Metrics;
+using EmployeeManagementSystem.API.Data;
+using EmployeeManagementSystem.Entities;
+using Microsoft.EntityFrameworkCore;
 namespace EmployeeManagementSystem.API.Services
 {
     public class PunchService : BackgroundService
@@ -7,17 +10,44 @@ namespace EmployeeManagementSystem.API.Services
         private readonly timeStamp _timestamp;
 
         private static List<string> _vector = new List<string>();
-
-        public PunchService(timeStamp timeStamp)
+        private readonly ApplicationDbContext _context;
+        public PunchService(timeStamp timeStamp,ApplicationDbContext context)
         {
             _timestamp = timeStamp;
-           
+            _context = context;
         }
-        public async Task<bool> PunchingSystem(string timestamp)
+        public async Task<int> ProjectCheckin(DateTime timestamp,int EmployeeID,int ProjectID)
         {
-            _vector.Add(timestamp);
-            Console.WriteLine(_vector.Count);
-            return true;
+            // Check if there's an open session for this employee in the app
+            var openSession = await _context.Attendance
+                .FirstOrDefaultAsync(a => a.EmployeeID ==EmployeeID
+                                       && a.CheckOut == null);
+
+            if (openSession != null)
+            {
+                // Already has an open session → reject or return existing SessionId
+                return 0; // or return openSession.SessionId;
+            }
+
+            var attendance = new Attendance
+            {
+                CheckIn = timestamp,
+                EmployeeID = EmployeeID,
+                Date = DateTime.Today,
+            };
+
+            _context.Attendance.Add(attendance);
+            await _context.SaveChangesAsync();
+
+            var Emp_proj = new Employee_Project
+            {
+                StartTime = timestamp,
+                ProjectID = ProjectID,
+                EmployeeID = EmployeeID,
+                SessionID = attendance.SessionID
+            };
+
+            return attendance.SessionID;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
