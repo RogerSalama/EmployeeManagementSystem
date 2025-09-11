@@ -68,10 +68,10 @@ namespace EmployeeManagementSystem.API.Controllers
 
             var sessionId = await _punchService.ProjectCheckin(timestamp, employeeId, projectId);
 
-            if (sessionId != null)
-            {
-                return Ok(new { sessionId });
-            }
+           // if (sessionId != null)
+            //{
+             //   return Ok(new { sessionId });
+            //}
 
             return BadRequest(new { message = "Check-in failed. You may already have an active session." });
         }
