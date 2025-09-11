@@ -2,6 +2,6 @@
 {
     public class CheckInRequest
     {
-        public Guid ProjectId { get; set; }
+        public int ProjectId { get; set; }
     }
 }
