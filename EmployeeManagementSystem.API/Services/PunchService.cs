@@ -5,7 +5,7 @@ using EmployeeManagementSystem.Entities;
 using Microsoft.EntityFrameworkCore;
 namespace EmployeeManagementSystem.API.Services
 {
-    public class PunchService : BackgroundService
+    public class PunchService 
     {
         private readonly timeStamp _timestamp;
 
@@ -49,7 +49,7 @@ namespace EmployeeManagementSystem.API.Services
 
             return attendance.SessionID;
         }
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        /*protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -70,7 +70,8 @@ namespace EmployeeManagementSystem.API.Services
                     await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
                 }
             }
-        }
+        }*/
+
         public async void PunchEOD()
         {
             // 1️ Take first and last elements

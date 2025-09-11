@@ -69,10 +69,10 @@ namespace EmployeeManagementSystem.API.Controllers
             // Call service to create Attendance session and get SessionID
             // var sessionId = await _punchService.CreateSessionAsync(employeeId, timestamp, projectId);
 
-            if (sessionId != null)
-            {
-                return Ok(new { sessionId });
-            }
+           // if (sessionId != null)
+            //{
+             //   return Ok(new { sessionId });
+            //}
 
             return BadRequest(new { message = "Check-in failed. You may already have an active session." });
         }
