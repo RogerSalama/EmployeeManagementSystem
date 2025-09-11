@@ -27,10 +27,6 @@ namespace EmployeeManagementSystem.API.Controllers
             _lockoutService = lockoutService;
         }
 
-
-
-
-
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
@@ -49,12 +45,9 @@ namespace EmployeeManagementSystem.API.Controllers
             }
             // If successful, issue JWT token
             var token = _tokenGeneration.GenerateJwtToken(request.Email);
-            return Ok(new
-            {
-                token
+            return Ok(new { token });
 
-            }
-            }
+         }
 
 
     
