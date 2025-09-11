@@ -31,9 +31,24 @@ public static class IdentitySeeder
                 Email = adminEmail,
                 EmailConfirmed = true
             };
-            await userManager.CreateAsync(admin, "SecurePass123!"); // ⚠️ change before production
+            await userManager.CreateAsync(admin, "SecurePass123!");
             await userManager.AddToRoleAsync(admin, "Admin");
         }
+        //creating a default employee... (omar)
+        var empEmail = "omar@gmail.com";
+        var employee = await userManager.FindByEmailAsync(empEmail);
+        if (employee == null)
+        {
+            employee = new ApplicationUser
+            {
+                UserName = "Omar",
+                Email = empEmail,
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(employee, "SecurePass123!");
+            await userManager.AddToRoleAsync(employee, "Employee");
+        }
+
 
         // 4. Add permissions as claims (example)
         var adminRole = await roleManager.FindByNameAsync("Admin");

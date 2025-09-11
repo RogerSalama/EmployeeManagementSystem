@@ -56,14 +56,5 @@ namespace EmployeeManagementSystem.API.Controllers
             return Ok(new { token });
 
          }
-
-
-    
-        
-
-
-
-        
-
     }
 }

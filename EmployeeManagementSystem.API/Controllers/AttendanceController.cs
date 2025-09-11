@@ -42,20 +42,17 @@ namespace EmployeeManagementSystem.API.Controllers
 
         //}
         [HttpPost("checkin")]
-        [Authorize(Roles = "Employee")]
-        public async Task<IActionResult> CheckIn([FromBody] dynamic request)
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> CheckIn([FromBody] CheckInRequest request)
         {
-
-            int projectId;
-            try
+            Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaa");
+            foreach (var claim in User.Claims)
             {
-                projectId = int.Parse((string)request.projectId);
-            }
-            catch
-            {
-                return BadRequest(new { message = "Invalid or missing ProjectId" });
+                Console.WriteLine($"{claim.Type} = {claim.Value}");
             }
 
+            int projectId = request.ProjectId;
+ 
 
             var employeeIdClaim = User.FindFirst("EmployeeId")?.Value;
             if (string.IsNullOrEmpty(employeeIdClaim))
@@ -68,10 +65,10 @@ namespace EmployeeManagementSystem.API.Controllers
 
             var sessionId = await _punchService.ProjectCheckin(timestamp, employeeId, projectId);
 
-           // if (sessionId != null)
-            //{
-             //   return Ok(new { sessionId });
-            //}
+            if (sessionId != null)
+            {
+               return Ok(new { sessionId });
+            }
 
             return BadRequest(new { message = "Check-in failed. You may already have an active session." });
         }
