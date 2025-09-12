@@ -94,7 +94,8 @@ builder.Services.AddOpenApiDocument(options =>
 builder.Services.AddHttpClient<timeStamp>();
 builder.Services.AddScoped<PunchService>();
 builder.Services.AddScoped<LockoutService>();
-builder.Services.AddScoped<TokenGeneration>();     
+builder.Services.AddScoped<TokenGeneration>();    
+builder.Services.AddScoped<DBCheckin>();
 
 
 

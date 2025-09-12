@@ -26,7 +26,7 @@ namespace EmployeeManagementSystem.API.Services
             if (openSession != null)
             {
                 // Already has an open session → reject or return existing SessionId
-                return 0; // or return openSession.SessionId;
+                return -1; // or return openSession.SessionId;
             }
 
             var attendance = new Attendance
@@ -34,18 +34,25 @@ namespace EmployeeManagementSystem.API.Services
                 CheckIn = timestamp,
                 EmployeeID = EmployeeID,
                 Date = DateTime.Today,
+                AFK_Time = TimeSpan.Zero, // 👈 ensure it's never null
+                
             };
 
             _context.Attendance.Add(attendance);
             await _context.SaveChangesAsync();
+            Console.WriteLine($"Generated SessionID: {attendance.SessionID}");
 
             var Emp_proj = new Employee_Project
             {
-                StartTime = timestamp,
                 ProjectID = ProjectID,
                 EmployeeID = EmployeeID,
-                SessionID = attendance.SessionID
+                SessionID = attendance.SessionID,
+                AdjustedAt = DateTime.MinValue,
+                
             };
+
+            _context.EmployeeProject.Add(Emp_proj);
+            await _context.SaveChangesAsync();
 
             return attendance.SessionID;
         }
