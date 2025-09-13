@@ -53,7 +53,7 @@ namespace EmployeeManagementSystem.API.Controllers
         }
 
         [HttpPost("Check-out")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> Checkout([FromBody] CheckOutRequest request)
         {
             var employeeIdClaim = User.FindFirst("EmployeeId")?.Value;
@@ -65,15 +65,23 @@ namespace EmployeeManagementSystem.API.Controllers
             int sessionId = request.sessionId;
             var timestamp = DateTime.UtcNow;
 
-            var ischeckedout = await _checkinService.DBCheck_out(sessionId, employeeId);
+            var checkedout = await _checkinService.DBCheck_out(sessionId, employeeId,timestamp);
 
 
-            if (ischeckedout)
+            if (checkedout != null && checkedout.Any())
             {
-                return Ok(new { sessionId, message = "Session generated" });
+                return Ok(new 
+                {   sessionId, 
+                    message = "Session closed successfully",
+                    checkedout
+                });
             }
 
-            return BadRequest(new { message = "Check-out failed" });
+            return BadRequest(new
+            {
+                sessionId,
+                message = "No logs found"
+            });
 
             //implement the checkout function that takes session ID and employee ID and finds last open log and close it,
             //then put an end time at the open session.
@@ -83,7 +91,7 @@ namespace EmployeeManagementSystem.API.Controllers
         }
 
         [HttpPost("change-proj")]
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Employee")]
         public async Task<IActionResult> ChangeProject([FromBody] ChangeprojReq request)
         {
             

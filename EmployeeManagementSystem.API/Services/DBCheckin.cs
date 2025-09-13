@@ -1,4 +1,5 @@
 ﻿using EmployeeManagementSystem.API.Data;
+using EmployeeManagementSystem.API.DataTransferObjects;
 using EmployeeManagementSystem.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -58,15 +59,42 @@ namespace EmployeeManagementSystem.API.Services
 
             return -1;
         }
-        public async Task<bool> DBCheck_out(int sessionID, int EmployeeID)
+        public async Task<List<CheckoutLogReturn>> DBCheck_out(int sessionID, int EmployeeID,DateTime timestamp)
         {
+            // close any open logs for projects in the session you wish to close 
+            var logsclosed = await _context.EmployeeProject
+                .FirstOrDefaultAsync(ss => ss.SessionID == sessionID && ss.EndTime == DateTime.MinValue && ss.EmployeeID == EmployeeID);
             
+            if (logsclosed != null)
+            {
+               logsclosed.EndTime = timestamp;
+                await _context.SaveChangesAsync();
+            }
 
-                return true;
-         }
+            var closeSession = await _context.Attendance
+                .FirstOrDefaultAsync(ss => ss.SessionID == sessionID && ss.CheckOut == null && ss.EmployeeID == EmployeeID);
 
-       
-        
+            if (closeSession != null)
+            {
+                closeSession.CheckOut = timestamp;
+                var listoflogs = await _context.EmployeeProject
+                    .Where(ss => ss.SessionID == sessionID && ss.EmployeeID == EmployeeID)
+                    .Select(ss => new CheckoutLogReturn
+                    {
+                        ProjectID = ss.ProjectID,
+                        StartTime = ss.StartTime,
+                        EndTime = ss.EndTime
+                    })
+                        .ToListAsync();
+                await _context.SaveChangesAsync();
+                return listoflogs;
+            }
+
+            return new List<CheckoutLogReturn>();
+        }
+
+
+
 
     }
 }
