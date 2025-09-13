@@ -58,5 +58,15 @@ namespace EmployeeManagementSystem.API.Services
 
             return -1;
         }
+        public async Task<bool> DBCheck_out(int sessionID, int EmployeeID)
+        {
+            
+
+                return true;
+         }
+
+       
+        
+
     }
 }

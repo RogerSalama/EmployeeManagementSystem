@@ -25,33 +25,10 @@ namespace EmployeeManagementSystem.API.Controllers
             
         }
 
-
-        //[HttpPost("checkin")] 
-        //public async Task<IActionResult> CheckIn()
-        //{
-        //    // Generate timestamp (UTC is preferred for consistency)
-        //    var timestamp = await _timestamp.GetCurrentTimeAsync();
-
-        //    // Call your service logic with timestamp
-        //    var result = await _punchService.PunchingSystem(timestamp);
-
-        //    if (result)
-        //    {
-        //        return Ok(new { message = "Timestamp stored!", timestamp });
-        //    }
-        //    else { return BadRequest(); }
-
-
-        //}
         [HttpPost("Check-in")]
         [Authorize(Roles = "User")]
         public async Task<IActionResult> CheckIn([FromBody] CheckInRequest request)
         {
-            Console.WriteLine("aaaaaaaaaaaaaaaaaaaaaaa");
-            foreach (var claim in User.Claims)
-            {
-                Console.WriteLine($"{claim.Type} = {claim.Value}");
-            }
 
             int projectId = request.ProjectId;
  
@@ -66,7 +43,6 @@ namespace EmployeeManagementSystem.API.Controllers
 
 
             var sessionId = await _punchService.ProjectCheckin(timestamp, employeeId, projectId);
-            Console.WriteLine($"Generated SessionID: {sessionId}");
 
             if (sessionId != -1)
             { 
@@ -80,7 +56,25 @@ namespace EmployeeManagementSystem.API.Controllers
         [Authorize(Roles = "User")]
         public async Task<IActionResult> Checkout([FromBody] CheckOutRequest request)
         {
-            return Ok(new List<object>());
+            var employeeIdClaim = User.FindFirst("EmployeeId")?.Value;
+            if (string.IsNullOrEmpty(employeeIdClaim))
+                return Unauthorized(new { message = "Employee ID not found in token." });
+
+
+            var employeeId = int.Parse(employeeIdClaim);
+            int sessionId = request.sessionId;
+            var timestamp = DateTime.UtcNow;
+
+            var ischeckedout = await _checkinService.DBCheck_out(sessionId, employeeId);
+
+
+            if (ischeckedout)
+            {
+                return Ok(new { sessionId, message = "Session generated" });
+            }
+
+            return BadRequest(new { message = "Check-out failed" });
+
             //implement the checkout function that takes session ID and employee ID and finds last open log and close it,
             //then put an end time at the open session.
             //then queries for all logs in current session and creates a summary of all open projects along with their corresponding duration,
@@ -92,7 +86,7 @@ namespace EmployeeManagementSystem.API.Controllers
         [Authorize(Roles = "User")]
         public async Task<IActionResult> ChangeProject([FromBody] ChangeprojReq request)
         {
-            // Get ProjectId and SessionId from JSON body
+            
             int projectId = request.projectId;
             int sessionId = request.sessionId;
 
@@ -123,11 +117,7 @@ namespace EmployeeManagementSystem.API.Controllers
             
         }
 
-        public class ChangeprojReq
-        {
-            public int projectId { get; set; }
-            public int sessionId {  get; set; }
-        }
+      
 
     }
 }
