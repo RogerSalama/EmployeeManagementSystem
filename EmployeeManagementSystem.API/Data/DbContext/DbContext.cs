@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
-using Microsoft.EntityFrameworkCore;
 using EmployeeManagementSystem.Entities;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -10,13 +8,15 @@ namespace EmployeeManagementSystem.API.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
+        : base(options)
         {
         }
 
         // Business tables
         public DbSet<Employee> Employee { get; set; }
+        public DbSet<Assigned_Projects> Assigned_Projects { get; set; }
+
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<AFKEvent> AFKEvent { get; set; }
         public DbSet<Overtime> Overtime { get; set; }
