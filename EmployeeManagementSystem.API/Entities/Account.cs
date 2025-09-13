@@ -1,5 +1,6 @@
 ﻿using EmployeeManagementSystem.Entities;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 public class ApplicationUser : IdentityUser
 {
@@ -11,6 +12,6 @@ public class ApplicationUser : IdentityUser
     //public int? EmployeeID { get; set; }
     //public Employee Employee { get; set; }
 
-    public int LockoutCycleCount = 0;
-
+    public int LockoutCycleCount { get; set; } = 0;
+   
 }
