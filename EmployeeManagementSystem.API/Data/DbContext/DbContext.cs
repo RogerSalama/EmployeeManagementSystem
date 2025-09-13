@@ -16,7 +16,6 @@ namespace EmployeeManagementSystem.API.Data
         // Business tables
         public DbSet<Employee> Employee { get; set; }
         public DbSet<Assigned_Projects> Assigned_Projects { get; set; }
-
         public DbSet<Attendance> Attendance { get; set; }
         public DbSet<AFKEvent> AFKEvent { get; set; }
         public DbSet<Overtime> Overtime { get; set; }
@@ -37,7 +36,8 @@ namespace EmployeeManagementSystem.API.Data
         public DbSet<VacationRequest> VacationRequest { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder builder)
+        //This function gives all OnDelete actions to have NoAction on delete by default
+        protected override void OnModelCreating(ModelBuilder builder) 
         {
             base.OnModelCreating(builder);
 
@@ -47,6 +47,20 @@ namespace EmployeeManagementSystem.API.Data
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.NoAction;
             }
+
+            //Set default OvertimeRules in database
+            builder.Entity<OvertimeRule>().HasData(
+                new OvertimeRule { ID = 1, DayType = DayTypes.WeekDay, Multiplier = 1.5m },
+                new OvertimeRule { ID = 2, DayType = DayTypes.WeekEnd, Multiplier = 2.0m },
+                new OvertimeRule { ID = 3, DayType = DayTypes.Holiday, Multiplier = 2.0m }
+            );
+        }
+
+        //This function makes all enum properties store the string in the DB instead of an int by default
+        protected override void ConfigureConventions(ModelConfigurationBuilder builder)
+        {
+            builder.Properties<Enum>()
+                   .HaveConversion<string>();
         }
     }
 }
