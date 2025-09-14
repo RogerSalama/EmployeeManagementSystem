@@ -22,13 +22,16 @@ namespace EmployeeManagementSystem.API.Services
                 {
                     ProjectID = p.ProjectID,
                     ProjectName = p.ProjectName,
+                    CustomerName = p.CustomerName,
                     Employees = p.Assigned_Projects
                         .Select(ep => new ViewEmployeesinProjectDto
                         {
                             Id = ep.Employee.EmployeeID,
                             Name = ep.Employee.First_Name + " " + ep.Employee.Last_Name,
-                            
+
+
                         }).ToList()
+                  
                 })
                 .ToListAsync();
         }
