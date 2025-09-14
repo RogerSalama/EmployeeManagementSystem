@@ -1,4 +1,6 @@
-﻿using System.Net.Http;
+﻿using EmployeeManagementSystem.Desktop.Services;
+using Microsoft.Extensions.DependencyInjection;
+using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -14,6 +16,7 @@ namespace EmployeeManagementSystem.Desktop
         public Loginpage()
         {
             InitializeComponent();
+            
         }
 
         private async void Login_Click(object sender, RoutedEventArgs e)

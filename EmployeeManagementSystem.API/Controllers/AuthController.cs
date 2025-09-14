@@ -53,8 +53,26 @@ namespace EmployeeManagementSystem.API.Controllers
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == request.Email);
             var employee = await _context.Employee.FirstOrDefaultAsync(u => u.UserID == user.Id);
             var token = _tokenGeneration.GenerateJwtToken(employee.EmployeeID);
+            // Store the token in the static store
+            SessionService.StoreToken(user.Id, token);
+
             return Ok(new { token });
 
          }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            // we get the user's id from the token claims,
+            // to know exactly which user's token is being removed 
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!string.IsNullOrEmpty(userId))
+            {
+                // Remove the token from the static store
+                SessionService.RemoveToken(userId);
+            }
+
+            return Ok(new { message = "Logout successful" });
+        }
     }
 }
