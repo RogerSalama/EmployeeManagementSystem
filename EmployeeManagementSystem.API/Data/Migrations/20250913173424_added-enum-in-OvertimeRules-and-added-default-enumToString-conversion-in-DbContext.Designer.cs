@@ -4,6 +4,7 @@ using EmployeeManagementSystem.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EmployeeManagementSystem.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250913173424_added-enum-in-OvertimeRules-and-added-default-enumToString-conversion-in-DbContext")]
+    partial class addedenuminOvertimeRulesandaddeddefaultenumToStringconversioninDbContext
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -442,26 +445,6 @@ namespace EmployeeManagementSystem.API.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("OvertimeRule");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            DayType = "WeekDay",
-                            Multiplier = 1.5m
-                        },
-                        new
-                        {
-                            ID = 2,
-                            DayType = "WeekEnd",
-                            Multiplier = 2.0m
-                        },
-                        new
-                        {
-                            ID = 3,
-                            DayType = "Holiday",
-                            Multiplier = 2.0m
-                        });
                 });
 
             modelBuilder.Entity("EmployeeManagementSystem.Entities.Payroll", b =>

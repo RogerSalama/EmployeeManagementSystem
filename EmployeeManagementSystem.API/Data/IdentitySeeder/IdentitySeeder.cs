@@ -34,6 +34,22 @@ public static class IdentitySeeder
             await userManager.CreateAsync(admin, "SecurePass123!");
             await userManager.AddToRoleAsync(admin, "Admin");
         }
+
+        var ManagerEmail = "sallam@gmail.com";
+        var Manager = await userManager.FindByEmailAsync(ManagerEmail);
+        if (Manager == null)
+        {
+            Manager = new ApplicationUser
+            {
+                UserName = "sallam",
+                Email = ManagerEmail,
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(Manager, "SecurePass123!");
+            await userManager.AddToRoleAsync(Manager, "Manager");
+        }
+
+
         //creating a default employee... (omar)
         var empEmail = "omar@gmail.com";
         var employee = await userManager.FindByEmailAsync(empEmail);

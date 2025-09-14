@@ -11,7 +11,7 @@ namespace EmployeeManagementSystem.API.Controllers
 {
 
     [ApiController]
-    [Route("employee/me")]
+    [Route("api/employee/me")]
     public class AssignedProjectsController : ControllerBase
     {
         private readonly getAssignedProjects _getAssignedProjectsService;
