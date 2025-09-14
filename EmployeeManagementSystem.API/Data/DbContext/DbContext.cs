@@ -54,6 +54,7 @@ namespace EmployeeManagementSystem.API.Data
                 new OvertimeRule { ID = 2, DayType = DayTypes.WeekEnd, Multiplier = 2.0m },
                 new OvertimeRule { ID = 3, DayType = DayTypes.Holiday, Multiplier = 2.0m }
             );
+
         }
 
         //This function makes all enum properties store the string in the DB instead of an int by default
