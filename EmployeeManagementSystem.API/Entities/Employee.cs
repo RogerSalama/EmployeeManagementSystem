@@ -41,4 +41,13 @@ public class Employee
     public string UserID { get; set; }
     [ForeignKey("UserID")]
     public ApplicationUser User { get; set; }
+
+
+
+
+
+
+    // Employee.cs
+    public ICollection<Assigned_Projects> Assigned_Projects { get; set; } = new List<Assigned_Projects>();
+
 }

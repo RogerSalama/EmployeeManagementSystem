@@ -24,5 +24,16 @@ namespace EmployeeManagementSystem.Entities
         [Precision(9, 2)]
         public decimal Expenses { get; set; } = 0; //fel awel khales brdo
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
+
+
+
+
+
+
+
+        // Project.cs
+        public ICollection<Assigned_Projects> Assigned_Projects { get; set; } = new List<Assigned_Projects>();
+
     }
 }
