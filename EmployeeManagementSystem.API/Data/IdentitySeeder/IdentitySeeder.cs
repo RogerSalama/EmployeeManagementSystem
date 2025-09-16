@@ -9,7 +9,7 @@ public static class IdentitySeeder
         var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
 
         // 1. Define roles
-        string[] roles = { "Admin", "Manager", "Employee", "Accountant" };
+        string[] roles = { "Admin", "Manager", "Employee","Head of Unit", "Accountant" };
 
         // 2. Create roles if they don't exist
         foreach (var role in roles)
@@ -48,7 +48,34 @@ public static class IdentitySeeder
             await userManager.CreateAsync(employee, "SecurePass123!");
             await userManager.AddToRoleAsync(employee, "Employee");
         }
-
+        //creating a default Manager
+        var manageremail = "manager@gmail.com";
+        var manager = await userManager.FindByEmailAsync(manageremail);
+        if (manager == null)
+        {
+            manager = new ApplicationUser
+            {
+                UserName = "Besheer",
+                Email = manageremail,
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(manager, "SecurePass123!");
+            await userManager.AddToRoleAsync(manager, "Manager");
+        }
+        //creating a default head of unit
+        var houemail = "hou@gmail.com";
+        var hou = await userManager.FindByEmailAsync(houemail);
+        if (hou == null)
+        {
+            hou = new ApplicationUser
+            {
+                UserName = "Roger",
+                Email = houemail,
+                EmailConfirmed = true
+            };
+            await userManager.CreateAsync(hou, "SecurePass123!");
+            await userManager.AddToRoleAsync(hou, "Head of Unit");
+        }
 
         // 4. Add permissions as claims (example)
         var adminRole = await roleManager.FindByNameAsync("Admin");

@@ -96,7 +96,7 @@ builder.Services.AddScoped<PunchService>();
 builder.Services.AddScoped<LockoutService>();
 builder.Services.AddScoped<TokenGeneration>();    
 builder.Services.AddScoped<DBCheckin>();
-
+builder.Services.AddScoped<VacationService>();
 
 
 var app = builder.Build();
